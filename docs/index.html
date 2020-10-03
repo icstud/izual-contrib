@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IZUAL</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="一个开放的、完整的、安全的的中文语音对话机器人">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+  <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+  <link href="https://icstud.gitee.io/file.myqcloud/images/izual-icons/gray32_32.png" rel='icon' type='image/x-icon'/>
+  <script src="//unpkg.com/docsify-edit-on-github/index.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+   window.$docsify = {
+       // 加载 _sidebar.md
+       loadSidebar: true,
+	   subMaxLevel: 2,
+	   coverpage: true,
+       repo: 'icstud/IZUAL', //wzpan/wukong-robot
+       search: 'auto', // 默认值
+       ga: 'UA-134706009-1',
+       formatUpdated: '{MM}/{DD} {HH}:{mm}',
+       plugins: [
+           EditOnGithubPlugin.create(
+               'https://github.com/icstud/izual-contrib/blob/master/docs/'
+		   ),
+           function (hook, vm) {
+             hook.beforeEach(function (html) {
+               return html
+                 + '<hr/>'
+                 + '上次更新：{docsify-updated} '
+             })
+           },
+           function (hook, vm) {
+             hook.mounted(function() {
+               var div = Docsify.dom.create('div')
+               div.id = 'gitalk-container'
+               var main = Docsify.dom.getNode('#main')
+               div.style = `width: ${main.clientWidth}px; margin: 0 auto 20px;`
+               Docsify.dom.appendTo(Docsify.dom.find('.content'), div)
+               var script = Docsify.dom.create('script')
+               script.async = true
+               var ctx = `gitalk.render('gitalk-container')`
+               script.textContent = ctx
+               Docsify.dom.appendTo(Docsify.dom.body, script)
+             })
+             hook.doneEach(function() {
+               var el = document.getElementById('gitalk-container')
+               while(el.hasChildNodes()) el.removeChild(el.firstChild)
+               gitalk.render('gitalk-container')
+             })
+           }
+       ]
+   }
+  </script>
+  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="//unpkg.com/docsify/lib/plugins/search.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-python.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-yaml.min.js"></script>
+  <script src="//unpkg.com/docsify/lib/plugins/emoji.min.js"></script>
+  <script src="//unpkg.com/docsify/lib/plugins/zoom-image.min.js"></script>
+  <script src="//unpkg.com/docsify-copy-code"></script>  
+  <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+  const gitalk = new Gitalk({
+    clientID: 'ad242817304ee6be6916',
+    clientSecret: 'c008eac9d19e5be65986a4bc77a6a49136f8f6a7',
+    repo: 'izual-contrib',
+    owner: 'icstud',
+    admin: ['icstud'],
+    // facebook-like distraction free mode
+    distractionFreeMode: false
+  })
+  </script>
+  <script src="//unpkg.com/docsify/lib/plugins/ga.min.js"></script>
+</body>
+</html>
